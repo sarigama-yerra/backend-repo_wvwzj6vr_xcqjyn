@@ -12,7 +12,7 @@ Model name is converted to lowercase for the collection name:
 """
 
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
 
 # Example schemas (replace with your own):
 
@@ -37,6 +37,31 @@ class Product(BaseModel):
     price: float = Field(..., ge=0, description="Price in dollars")
     category: str = Field(..., description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+
+# Course marketplace schemas
+
+class Course(BaseModel):
+    """
+    Courses collection schema
+    Collection name: "course"
+    """
+    title: str = Field(..., description="Course title")
+    slug: str = Field(..., description="URL-friendly identifier")
+    description: str = Field(..., description="Short description")
+    category: str = Field(..., description="Primary category")
+    level: str = Field("Beginner", description="Beginner, Intermediate, Advanced")
+    instructor_name: str = Field(..., description="Instructor display name")
+    thumbnail: str = Field(..., description="Image URL")
+    rating: float = Field(4.5, ge=0, le=5, description="Average rating 0-5")
+    rating_count: int = Field(0, ge=0, description="Number of ratings")
+    students: int = Field(0, ge=0, description="Number of enrolled students")
+    lessons: int = Field(0, ge=0, description="Lesson count")
+    language: str = Field("English", description="Course language")
+    duration: str = Field("8h 30m", description="Human-friendly duration")
+    is_free: bool = Field(False, description="Whether the course is free")
+    price: float = Field(0, ge=0, description="Current price")
+    old_price: Optional[float] = Field(None, ge=0, description="Original price if discounted")
+    tags: List[str] = Field(default_factory=list, description="Tags for filtering")
 
 # Add your own schemas here:
 # --------------------------------------------------
